@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({weight:"400"});
+const inter = Poppins({
+  weight: ["100", "200", "500"],
+  subsets: ["latin"]  // Añade los subconjuntos que necesitas
+});
 
 export const metadata: Metadata = {
   title: "E commerce",
