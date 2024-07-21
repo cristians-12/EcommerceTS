@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Poppins({weight:"400"});
+const inter = Inter({weight:"400"});
 
 export const metadata: Metadata = {
   title: "E commerce",
