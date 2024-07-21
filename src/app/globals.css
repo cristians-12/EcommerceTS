@@ -18,12 +18,76 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
+
+  background-color: hsla(219.99999999999997, 4%, 13%, 1);
+  background-image: radial-gradient(
+      circle at 20% 77%,
+      hsla(180, 100%, 17%, 0.53) 18.659173203473348%,
+      transparent 42.13584553913468%
+    ),
+    radial-gradient(
+      circle at 43% 56%,
+      hsla(180, 100%, 17%, 0.32) 13.933329163025846%,
+      transparent 44.96896996083245%
+    ),
+    radial-gradient(
+      circle at 85% 108%,
+      hsla(180, 100%, 17%, 0.45) 26.427737780903414%,
+      transparent 61.65962043205807%
+    ),
+    radial-gradient(
+      circle at 65% 82%,
+      hsla(180, 100%, 17%, 0.62) 11.498706521470005%,
+      transparent 55.38219949887443%
+    ),
+    radial-gradient(
+      circle at 16% 63%,
+      hsla(227.6470588235294, 0%, 6%, 1) 31.903152547497644%,
+      transparent 49.64645694939111%
+    ),
+    radial-gradient(
+      circle at 1% 2%,
+      hsla(231.42857142857144, 5%, 23%, 1) 121%,
+      transparent 150%
+    ),
+    radial-gradient(
+      circle at 69% 17%,
+      hsla(227.6470588235294, 0%, 6%, 1) 0%,
+      transparent 81%
+    ),
+    radial-gradient(
+      circle at 100% 97%,
+      hsla(240, 6%, 93%, 1) 0%,
+      transparent 47.0714621267486%
+    ),
+    radial-gradient(
+      circle at 20% 103%,
+      hsla(227.6470588235294, 0%, 6%, 1) 29.75396196974718%,
+      transparent 50.579922535581936%
+    ),
+    radial-gradient(
+      circle at 80% 93%,
+      hsla(227.6470588235294, 0%, 6%, 1) 29.75396196974718%,
+      transparent 50.579922535581936%
+    ),
+    radial-gradient(
+      circle at 69% 25%,
+      hsla(227.6470588235294, 0%, 6%, 1) 31.903152547497644%,
+      transparent 49.64645694939111%
+    ),
+    radial-gradient(
+      circle at 18% 29%,
+      hsla(227.6470588235294, 0%, 6%, 1) 31.903152547497644%,
+      transparent 49.64645694939111%
+    );
+  background-blend-mode: normal, normal, normal, normal, normal, multiply,
+    normal, normal, normal, normal, normal, normal;
 }
 
 @layer utilities {
