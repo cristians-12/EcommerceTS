@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
+import SideNav from "@/components/SideNav";
+import NavBar from "@/components/NavBar";
 
 const inter = Poppins({
   weight: ["100", "200", "500"],
-  subsets: ["latin"]  // Añade los subconjuntos que necesitas
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -19,7 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {/* <SideNav/> */}
+        <div className="pt-10">
+          {children}
+          <NavBar />
+        </div>
+      </body>
     </html>
   );
 }
