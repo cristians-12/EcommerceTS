@@ -16,14 +16,14 @@ const NavBar = () => {
       <div className="flex gap-10">
         <div>
           <Link href={"/"}>
-            <h2 className={path == "/" ? "text-emerald-950 font-extrabold" : "text-white font-light"}>
+            <h2 className={path == "/" ? "text-emerald-950 font-extrabold" : "text-white font-light hover:text-emerald-950 transition ease-in-out hover:transition-all"}>
               Inicio
             </h2>
           </Link>
         </div>
         <div>
           <Link href={"/profile"}>
-            <h2 className={path == "/profile" ? "text-emerald-950 font-extrabold": "text-white font-light"}>
+            <h2 className={path == "/profile" ? "text-emerald-950 font-extrabold": "text-white font-light hover:text-emerald-950 transition ease-in-out hover:transition-all"}>
               Perfil
             </h2>
           </Link>
