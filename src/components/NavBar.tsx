@@ -11,19 +11,19 @@ const NavBar = () => {
         <h1 className="text-[1.5rem] font-extrabold">LOGO</h1>
       </div>
       <div className="w-80">
-        <input type="text" placeholder="Buscar.." className="w-96 py-1" />
+        <input type="text" placeholder="Buscar.." className="w-96 py-1 px-2 text-black" />
       </div>
       <div className="flex gap-10">
         <div>
           <Link href={"/"}>
-            <h2 className={path == "/" ? "text-emerald-950" : "text-white"}>
+            <h2 className={path == "/" ? "text-emerald-950 font-extrabold" : "text-white font-light"}>
               Inicio
             </h2>
           </Link>
         </div>
         <div>
           <Link href={"/profile"}>
-            <h2 className={path == "/profile" ? "text-emerald-950": "text-white"}>
+            <h2 className={path == "/profile" ? "text-emerald-950 font-extrabold": "text-white font-light"}>
               Perfil
             </h2>
           </Link>
