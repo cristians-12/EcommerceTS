@@ -13,7 +13,6 @@ const Home = () => {
           Todas las categorias
         </div>
       </div>
-      <button onClick={() => setImage(!image)}>mostrar</button>
     </div>
   );
 };

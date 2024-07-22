@@ -16,14 +16,14 @@ const NavBar = () => {
       <div className="flex gap-10">
         <div>
           <Link href={"/"}>
-            <h2 className={path == "/" ? "text-blue-400" : "text-white"}>
+            <h2 className={path == "/" ? "text-emerald-950" : "text-white"}>
               Inicio
             </h2>
           </Link>
         </div>
         <div>
           <Link href={"/profile"}>
-            <h2 className={path == "/profile" ? "text-blue-400" : "text-white"}>
+            <h2 className={path == "/profile" ? "text-emerald-950": "text-white"}>
               Perfil
             </h2>
           </Link>
