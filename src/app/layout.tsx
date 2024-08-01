@@ -3,6 +3,7 @@ import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import SideNav from "@/components/SideNav";
 import NavBar from "@/components/NavBar";
+import { Auth, AuthProvider } from "@/context/authContext";
 
 const inter = Poppins({
   weight: ["100", "200", "500"],
@@ -23,10 +24,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {/* <SideNav/> */}
-        <div className="pt-10">
-          {children}
-          <NavBar />
-        </div>
+        <AuthProvider>
+          <div className="pt-10">
+            {children}
+            <NavBar />
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

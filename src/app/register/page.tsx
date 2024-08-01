@@ -1,24 +1,51 @@
 "use client";
+import { redirect, useRouter } from "next/navigation";
+
 import React, { useState } from "react";
 
 type User = {
   email: string;
   password: string;
-  confirmPassword: string;
+  password_confirmation: string;
+  name: string;
 };
 
 const Register = () => {
   const [user, setUser] = useState<User>({
     email: "",
     password: "",
-    confirmPassword: "",
+    password_confirmation: "",
+    name: "",
   });
+  const { push } = useRouter();
 
-  const handleRegister = () => {
-    if (user.password == user.confirmPassword) {
-      alert("pase");
-    }else{
-        
+  const redireccionar = () => {
+    // push("/");
+  };
+
+  const handleRegister = async () => {
+    if (user.password == user.password_confirmation) {
+      const response = await fetch("http://localhost:8000/api/register", {
+        method: "POST",
+        // mode: "no-cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+          name: user.name,
+          password_confirmation: user.password_confirmation,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+      if (data.response == "ok") {
+        redireccionar();
+      }
+    } else {
+      alert("Invalido");
     }
   };
 
@@ -29,6 +56,12 @@ const Register = () => {
         className="w-screen flex flex-col justify-center items-center h-[95vh] gap-8"
         onSubmit={(e) => e.preventDefault()}
       >
+        <input
+          type="text"
+          placeholder="Ingresa tu nombre"
+          className="px-3 py-2 w-[35%] text-black"
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+        />
         <input
           type="email"
           placeholder="Ingresa tu email"
@@ -46,7 +79,7 @@ const Register = () => {
           placeholder="Confirma tu contrasena"
           className="px-3 py-2 w-[35%] text-black"
           onChange={(e) =>
-            setUser({ ...user, confirmPassword: e.target.value })
+            setUser({ ...user, password_confirmation: e.target.value })
           }
         />
         <button
@@ -55,6 +88,7 @@ const Register = () => {
         >
           Registrame!
         </button>
+        <button onClick={() => push("/login")}>Ya tengo una cuenta</button>
       </form>
     </>
   );
