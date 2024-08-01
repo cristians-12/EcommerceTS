@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/context/authContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -6,6 +7,8 @@ import React, { useState } from "react";
 const NavBar = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const path = usePathname();
+  const {isLogged, signOut} = useAuth();
+
   const handleKeyPress = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
@@ -66,6 +69,9 @@ const NavBar = () => {
           </Link>
         </div>
         <div>Carrito</div>
+        <div>
+          {isLogged ? (<button onClick={()=>signOut()}>Salir de cuenta</button>) : (<Link href={'/login'}>Iniciar sesion</Link>)}
+        </div>
       </div>
     </div>
   );

@@ -1,59 +1,58 @@
 "use client";
-import React, { useState } from "react";
-
-type User = {
-  email: string;
-  password: string;
-};
+import { useAuth } from "@/context/authContext";
+import { useRouter } from "next/navigation";
+import Router from "next/router";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
 const Login = () => {
-  const [user, setUser] = useState<User>({
-    email: "",
-    password: "",
-  });
+  const { signIn, user, setUser } = useAuth();
+  const {push} = useRouter();
 
-  const handleLogin = async () => {
-    const response = await fetch("http://localhost:8000/api/login", {
-      method: "POST",
-      // mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
-    alert(data.message);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (user) {
+      await signIn(user);
+      push('/profile')
+    } else {
+      console.log("No hay usuario");
+    }
   };
 
   return (
-    <div>
+    <div className="w-screen">
       <form
-        action=""
         className="w-screen flex flex-col justify-center items-center h-[95vh] gap-8"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         <input
           type="email"
           placeholder="Ingresa tu email"
           className="px-3 py-2 w-[35%] text-black"
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          value={user?.email || ""}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setUser((prevUser) => ({
+              ...prevUser,
+              email: e.target.value,
+            }))
+          }
         />
         <input
-          type="text"
+          type="password"
           placeholder="Ingresa tu contrasena"
           className="px-3 py-2 w-[35%] text-black"
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
+          value={user?.password || ""}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setUser((prevUser) => ({
+              ...prevUser,
+              password: e.target.value,
+            }))
+          }
         />
         <button
-          onClick={() => handleLogin()}
+          type="submit"
           className="backdrop-blur-sm bg-teal-600 px-5 py-2 rounded-lg"
         >
-          Iniciar sesion
+          Iniciar sesión
         </button>
       </form>
     </div>
