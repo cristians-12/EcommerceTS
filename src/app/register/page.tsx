@@ -1,4 +1,6 @@
 "use client";
+import { useAuth } from "@/context/authContext";
+import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 
 import React, { useState } from "react";
@@ -11,43 +13,46 @@ type User = {
 };
 
 const Register = () => {
-  const [user, setUser] = useState<User>({
-    email: "",
-    password: "",
-    password_confirmation: "",
-    name: "",
-  });
+  // const [user, setUser] = useState<User>({
+  //   email: "",
+  //   password: "",
+  //   password_confirmation: "",
+  //   name: "",
+  // });
+
+  const { setIsLogged, user, setUser, register } = useAuth();
   const { push } = useRouter();
-
-  const redireccionar = () => {
-    // push("/");
+  const handleRegister = () => {
+    register();
+    push("/");
   };
 
-  const handleRegister = async () => {
-    if (user.password == user.password_confirmation) {
-      const response = await fetch("http://localhost:8000/api/register", {
-        method: "POST",
-        // mode: "no-cors",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: user.email,
-          password: user.password,
-          name: user.name,
-          password_confirmation: user.password_confirmation,
-        }),
-      });
-      const data = await response.json();
-      console.log(data);
-      if (data.response == "ok") {
-        redireccionar();
-      }
-    } else {
-      alert("Invalido");
-    }
-  };
+  // const handleRegister = async () => {
+  //   if (user.password == user.password_confirmation) {
+  //     const response = await fetch("http://localhost:8000/api/register", {
+  //       method: "POST",
+  //       // mode: "no-cors",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         email: user.email,
+  //         password: user.password,
+  //         name: user.name,
+  //         password_confirmation: user.password_confirmation,
+  //       }),
+  //     });
+  //     const data = await response.json();
+  //     console.log(data);
+  //     if (data.response == "ok") {
+  //       setIsLogged(true);
+  //       redireccionar();
+  //     }
+  //   } else {
+  //     alert("Invalido");
+  //   }
+  // };
 
   return (
     <>
@@ -88,7 +93,7 @@ const Register = () => {
         >
           Registrame!
         </button>
-        <button onClick={() => push("/login")}>Ya tengo una cuenta</button>
+        <Link href={"/login"}>Ya tengo una cuenta</Link>
       </form>
     </>
   );

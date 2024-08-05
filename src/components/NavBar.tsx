@@ -7,24 +7,32 @@ import React, { useState } from "react";
 const NavBar = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const path = usePathname();
-  const {isLogged, signOut} = useAuth();
+  const { isLogged, signOut, user } = useAuth();
 
   const handleKeyPress = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter") {
-      console.log(JSON.stringify({letter: inputValue}))
       event.preventDefault();
-      const response = await fetch("http://127.0.0.1:8000/api/search/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ letter: inputValue }),
-      });
 
-      const data = await response.json();
-      console.log(data);
+      try {
+        const response = await fetch("http://localhost:8000/api/search/", {
+          method: "POST",
+          body: JSON.stringify({ letter: inputValue }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
     }
   };
   return (
@@ -70,7 +78,11 @@ const NavBar = () => {
         </div>
         <div>Carrito</div>
         <div>
-          {isLogged ? (<button onClick={()=>signOut()}>Salir de cuenta</button>) : (<Link href={'/login'}>Iniciar sesion</Link>)}
+          {isLogged ? (
+            <button onClick={() => signOut()}>Salir de cuenta</button>
+          ) : (
+            <Link href={"/login"}>Iniciar sesion</Link>
+          )}
         </div>
       </div>
     </div>

@@ -1,11 +1,14 @@
 "use client";
 import { useAuth } from "@/context/authContext";
 import Link from "next/link";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import Loading from "../loading";
 
 const Profile = () => {
-  const { isLogged, user } = useAuth();
+  const { isLogged, user, getUser } = useAuth();
+  useEffect(() => {
+    getUser()
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-[95vh]">

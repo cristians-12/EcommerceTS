@@ -7,6 +7,7 @@ import React, {
   useEffect,
 } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 interface AuthContextType {
   isLogged: boolean;
@@ -15,6 +16,8 @@ interface AuthContextType {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   signIn: (user: User) => Promise<void>;
   signOut: () => void;
+  register: () => Promise<void>; // <-- Agregado
+  getUser: () => Promise<void>; // <-- Agregado
 }
 
 interface AuthProps {
@@ -25,6 +28,7 @@ interface User {
   name?: string;
   password?: string;
   email?: string;
+  password_confirmation?: string;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -46,6 +50,31 @@ export function AuthProvider({ children }: AuthProps) {
     checkLogin();
   }, []);
 
+  const register = async () => {
+    if (user.password === user.password_confirmation) {
+      const response = await fetch("http://localhost:8000/api/register", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+          name: user.name,
+          password_confirmation: user.password_confirmation,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+      if (data.response === "ok") {
+        setIsLogged(true);
+      }
+    } else {
+      alert("Invalido");
+    }
+  };
+
   const signIn = async () => {
     const response = await fetch("http://localhost:8000/api/login", {
       method: "POST",
@@ -66,20 +95,45 @@ export function AuthProvider({ children }: AuthProps) {
       setIsLogged(true);
       setUser(data.user);
     } else {
-      alert("Login failed: " + (await response.text()));
+      alert("Login failed:");
     }
   };
 
   const signOut = () => {
-    console.log('saliendo de sesion')
+    console.log("saliendo de sesion");
     Cookies.remove("cookie_token");
     setIsLogged(false);
     setUser({ email: "", password: "" });
   };
 
+  const getUser = async () => {
+    const response = await fetch("http://localhost:8000/api/userProfile", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("cookie_token")}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    const {name, email} = data.userData;
+    console.log(name)
+    setUser({...user, name:name})
+  };
+
   return (
     <AuthContext.Provider
-      value={{ isLogged, setIsLogged, user, setUser, signIn, signOut }}
+      value={{
+        isLogged,
+        setIsLogged,
+        user,
+        setUser,
+        signIn,
+        signOut,
+        register,
+        getUser, // <-- Agregado aquí
+      }}
     >
       {children}
     </AuthContext.Provider>
